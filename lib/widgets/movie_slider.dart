@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class MovieSlider extends StatelessWidget {
+  const MovieSlider({super.key});
+
   // const MovieSlider({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 270,
       // color: Colors.red,
@@ -22,7 +24,7 @@ class MovieSlider extends StatelessWidget {
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 20,
-                itemBuilder: (_, int index) => _MoviePoster()),
+                itemBuilder: (_, int index) => const _MoviePoster()),
           )
         ],
       ),
@@ -47,7 +49,7 @@ class _MoviePoster extends StatelessWidget {
                 arguments: 'detalls peli'),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
+              child: const FadeInImage(
                 placeholder: AssetImage('assets/no-image.jpg'),
                 image: NetworkImage('https://placehold.co/300x400/png'),
                 width: 130,
@@ -59,7 +61,7 @@ class _MoviePoster extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          Text(
+          const Text(
             'Star Wars: El retorno del Jedi',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

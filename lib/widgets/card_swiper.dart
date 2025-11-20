@@ -2,11 +2,13 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
 class CardSwiper extends StatelessWidget {
+  const CardSwiper({super.key});
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Container(
+    return SizedBox(
         width: double.infinity,
         // Aquest multiplicador estableix el tant per cent de pantalla ocupada 50%
         height: size.height * 0.5,
@@ -22,7 +24,7 @@ class CardSwiper extends StatelessWidget {
                   arguments: 'detalls peli'),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: FadeInImage(
+                child: const FadeInImage(
                     placeholder: AssetImage('assets/no-image.jpg'),
                     image: NetworkImage('https://placehold.co/300x400/png'),
                     fit: BoxFit.cover),
