@@ -1,16 +1,14 @@
-import 'models.dart';
-
 class Movie {
   bool adult;
-  String backdropPath;
+  String? backdropPath;
   List<int> genreIds;
   int id;
   String originalLanguage;
   String originalTitle;
   String overview;
   double popularity;
-  String posterPath;
-  DateTime releaseDate;
+  String? posterPath;
+  DateTime? releaseDate;
   String title;
   bool video;
   double voteAverage;
@@ -18,57 +16,44 @@ class Movie {
 
   Movie({
     required this.adult,
-    required this.backdropPath,
+    this.backdropPath,
     required this.genreIds,
     required this.id,
     required this.originalLanguage,
     required this.originalTitle,
     required this.overview,
     required this.popularity,
-    required this.posterPath,
-    required this.releaseDate,
+    this.posterPath,
+    this.releaseDate,
     required this.title,
     required this.video,
     required this.voteAverage,
     required this.voteCount,
   });
 
-  factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
-
-  // String toJson() => json.encode(toMap());
+  String get fullPosterPath {
+    if (posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${posterPath}';
+    }
+    return 'https://i.stack.imgur.com/GNhxO.png';
+  }
 
   factory Movie.fromMap(Map<String, dynamic> json) => Movie(
-        adult: json["adult"],
+        adult: json["adult"] ?? false,
         backdropPath: json["backdrop_path"],
-        genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
+        genreIds: List<int>.from((json["genre_ids"] ?? []).map((x) => x)),
         id: json["id"],
-        originalLanguage: json["original_language"],
-        originalTitle: json["original_title"],
-        overview: json["overview"],
-        popularity: json["popularity"].toDouble(),
+        originalLanguage: json["original_language"] ?? "",
+        originalTitle: json["original_name"] ?? "",
+        overview: json["overview"] ?? "",
+        popularity: (json["popularity"] ?? 0).toDouble(),
         posterPath: json["poster_path"],
-        releaseDate: DateTime.parse(json["release_date"]),
-        title: json["title"],
-        video: json["video"],
-        voteAverage: json["vote_average"].toDouble(),
-        voteCount: json["vote_count"],
+        releaseDate: json["release_date"] == null || json["release_date"] == ""
+            ? null
+            : DateTime.tryParse(json["release_date"]),
+        title: json["title"] ?? "",
+        video: json["video"] ?? false,
+        voteAverage: (json["vote_average"] ?? 0).toDouble(),
+        voteCount: json["vote_count"] ?? 0,
       );
-
-  // Map<String, dynamic> toMap() => {
-  //       "adult": adult,
-  //       "backdrop_path": backdropPath,
-  //       "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
-  //       "id": id,
-  //       "original_language": originalLanguage,
-  //       "original_title": originalTitle,
-  //       "overview": overview,
-  //       "popularity": popularity,
-  //       "poster_path": posterPath,
-  //       "release_date":
-  //           "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",
-  //       "title": title,
-  //       "video": video,
-  //       "vote_average": voteAverage,
-  //       "vote_count": voteCount,
-  //     };
 }

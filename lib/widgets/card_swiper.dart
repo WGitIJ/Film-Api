@@ -3,20 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/models/models.dart';
 
 class CardSwiper extends StatelessWidget {
+  final List<Movie> movies;
   const CardSwiper({Key? key, required this.movies}) : super(key: key);
 
-  final List<Movie> movies;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    if(movies.isEmpty) {
+      return const SizedBox(
+        width: double.infinity,
+        height: 400,
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
     return SizedBox(
         width: double.infinity,
         // Aquest multiplicador estableix el tant per cent de pantalla ocupada 50%
         height: size.height * 0.5,
         // color: Colors.red,
         child: Swiper(
-          itemCount: 10,
+          itemCount: movies.length,
           layout: SwiperLayout.STACK,
           itemWidth: size.width * 0.6,
           itemHeight: size.height * 0.4,
@@ -25,12 +32,12 @@ class CardSwiper extends StatelessWidget {
             print(movie.posterPath);
             return GestureDetector(
               onTap: () => Navigator.pushNamed(context, 'details',
-                  arguments: 'detalls peli'),
+                  arguments: movie),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: const FadeInImage(
-                    placeholder: AssetImage('assets/no-image.jpg'),
-                    image: NetworkImage('https://placehold.co/300x400/png'),
+                child: FadeInImage(
+                    placeholder: const AssetImage('assets/no-image.jpg'),
+                    image: NetworkImage(movie.fullPosterPath),
                     fit: BoxFit.cover),
               ),
             );

@@ -11,7 +11,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final moviesProvider = Provider.of<MoviesProvider>(context);
 
-    print(moviesProvider.onDisplayMovies);
+    print('Movies loaded: ${moviesProvider.onDisplayMovies.length}');
+    print("Popular movies loaded: ${moviesProvider.popularMovies.length}");
 
     return Scaffold(
       appBar: AppBar(
@@ -26,10 +27,22 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               // Targetes principals
-              CardSwiper(movies: moviesProvider.onDisplayMovies),
+              if(moviesProvider.onDisplayMovies.isEmpty)
+                const SizedBox(
+                  height: 400,
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else
+                CardSwiper(movies: moviesProvider.onDisplayMovies),
 
               // Slider de pel·licules
-              const MovieSlider(),
+              if(moviesProvider.popularMovies.isEmpty)
+                const SizedBox(
+                  height: 400,
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else
+                MovieSlider(popularMovies: moviesProvider.popularMovies),
               // Poodeu fer la prova d'afegir-ne uns quants, veureu com cada llista és independent
               // MovieSlider(),
               // MovieSlider(),
