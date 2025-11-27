@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert' as convert;
-
 import 'package:http/http.dart' as http;
 import 'package:movies_app/models/popular.dart';
 
